@@ -7,18 +7,24 @@ from app.routes import auth, calorie_routes
 
 app = FastAPI(title="Calorie Tracker API")
 
+# Enable Cross-Origin Resource Sharing to allow frontend (on another domain/port) to access the API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], #Replace with frontend URL in production
+    allow_origins=["*"],  # Allow all origins (for development); use specific domain in production
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
 )
-# Mount static files for serving frontend assets
+
+# Mount static files so they can be served under the "/static" path
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-# Set up Jinja2 templates for rendering HTML
+
+# Configure the templates folder for rendering dynamic HTML pages using Jinja2
 templates = Jinja2Templates(directory="app/templates")
 
+# Include the authentication routes under the "/api/auth" prefix
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+
+# Include the calorie-related routes under the "/api/calories" prefix
 app.include_router(calorie_routes.router, prefix="/api/calories", tags=["Calories"])
 
