@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.db.database import engine
+from app.db.database import engine, SessionLocal, Session
+from typing import Annotated, Depends
 from app.routes import auth, calorie_routes
 from app.models import user, food_entry  # Import models to ensure they are registered with SQLAlchemy
 
 app = FastAPI(title="Calorie Tracker API")
+app.models.Base.metadata.create_all(bind=engine)  # Create database tables based on models
 
 # Enable Cross-Origin Resource Sharing to allow frontend (on another domain/port) to access the API
 app.add_middleware(
@@ -28,4 +30,13 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 
 # Include the calorie-related routes under the "/api/calories" prefix
 app.include_router(calorie_routes.router, prefix="/api/calories", tags=["Calories"])
+
+def get_db():
+    db = SessionLocal()  # Create a new database session
+    try:
+        yield db  # Yield the session to be used in route handlers
+    finally:
+        db.close()  # Ensure the session is closed after use
+
+db_dependencies = Annotated[Session, Depends(get_db)]
 
