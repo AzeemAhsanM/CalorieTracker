@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from app.db.database import engine
 from app.routes import auth, calorie_routes
+from app.models import user, food_entry  # Import models to ensure they are registered with SQLAlchemy
 
 app = FastAPI(title="Calorie Tracker API")
 
