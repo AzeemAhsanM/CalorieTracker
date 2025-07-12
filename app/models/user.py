@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, ForeignKey, String
-from db.database import Base
+from app.db.database import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -25,4 +25,4 @@ class foodEntry(Base):
     date = Column(String, nullable=False)  # Store date as a string (e.g., "YYYY-MM-DD")
 
     def __repr__(self):
-        return f"<FoodEntry(id={self.id}, user_id={self.user_id}, food_name={self.food_name}, calories={self.calories}, date={self.date})>"    
+        return f"<FoodEntry(id={self.id}, user_id={self.user_id}, food_name={self.food_name}, calories={self.calories}, date={self.date})>"
