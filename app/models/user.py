@@ -19,8 +19,7 @@ class foodEntry(Base):
     __tablename__ = "food_entries"
 
     id = Column(Integer, primary_key=True, index=True)  # Primary key for food entries
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)  # Foreign key to users table
-    food_name = Column(String, index=True)
+    name = Column(String, index=True)
     calories = Column(Integer, nullable=False)
     date = Column(String, nullable=False)  # Store date as a string (e.g., "YYYY-MM-DD")
 
