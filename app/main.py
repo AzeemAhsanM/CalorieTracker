@@ -6,7 +6,7 @@ from app.db.database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from typing import Annotated
 from app.routes import auth, food_api 
-from app.models import user  # Import models to ensure they are registered with SQLAlchemy
+from app.models import user, FoodEntry  # Import models to ensure they are registered with SQLAlchemy
 from fastapi import APIRouter
 
 app = FastAPI(title="Calorie Tracker API")
