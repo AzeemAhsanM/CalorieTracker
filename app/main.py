@@ -1,9 +1,7 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-#from fastapi.staticfiles import StaticFiles
-#from fastapi.templating import Jinja2Templates
 from app.db.database import engine, SessionLocal
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session i
 from typing import Annotated
 from app.routes import auth, food_api 
 from app.models import user, FoodEntry  # Import models to ensure they are registered with SQLAlchemy
@@ -13,21 +11,6 @@ app = FastAPI(title="Calorie Tracker API")
 router = APIRouter()
 #Base.metadata.create_all(bind=engine)
 #app.models.Base.metadata.create_all(bind=engine)  # Create database tables based on models
-
-# Enable Cross-Origin Resource Sharing to allow frontend (on another domain/port) to access the API
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (for development); use specific domain in production
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
-)
-
-# Mount static files so they can be served under the "/static" path
-#app.mount("/static", StaticFiles(directory="app/static"), name="static")
-
-# Configure the templates folder for rendering dynamic HTML pages using Jinja2
-#templates = Jinja2Templates(directory="app/templates")
 
 # Include the authentication routes under the "/api/auth" prefix
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
